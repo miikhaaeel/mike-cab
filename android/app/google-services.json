@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "420747689892",
+    "firebase_url": "https://mike-cab-default-rtdb.firebaseio.com",
+    "project_id": "mike-cab",
+    "storage_bucket": "mike-cab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:420747689892:android:22c0a70ebff7dea58a0b31",
+        "android_client_info": {
+          "package_name": "com.example.mike_cab"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "420747689892-sqf58mhc1u1efcuug41jnqarqie762sl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzEvinPjWToyskPtVyXlTvhh7GTtwwBdY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "420747689892-sqf58mhc1u1efcuug41jnqarqie762sl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

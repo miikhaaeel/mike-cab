@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>420747689892-usp8jgquq0om2ue589ecb11r8hee5gdi.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.420747689892-usp8jgquq0om2ue589ecb11r8hee5gdi</string>
+	<key>API_KEY</key>
+	<string>AIzaSyA0Lxk_t_dX0W7dkvLW1aSp0tyynBGqhFI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>420747689892</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.mikeCab</string>
+	<key>PROJECT_ID</key>
+	<string>mike-cab</string>
+	<key>STORAGE_BUCKET</key>
+	<string>mike-cab.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:420747689892:ios:855f1af7856d3d6e8a0b31</string>
+	<key>DATABASE_URL</key>
+	<string>https://mike-cab-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>

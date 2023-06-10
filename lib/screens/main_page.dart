@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
@@ -10,6 +11,24 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Main Page'),
+        centerTitle: true,
+      ),
+      body: Center(
+        child: MaterialButton(
+          onPressed: () {
+            DatabaseReference dbref =
+                FirebaseDatabase.instance.ref().child('animal');
+            dbref.set('goat');
+          },
+          height: 50,
+          color: Colors.green,
+          minWidth: 100,
+          child: Text('Test Connection'),
+        ),
+      ),
+    );
   }
 }
