@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mike_cab/firebase_options.dart';
+import 'package:mike_cab/screens/loginpage.dart';
+import 'package:mike_cab/screens/registration_page.dart';
 
 import 'screens/main_page.dart';
 
@@ -19,10 +21,10 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         fontFamily: 'Brand-Regular',
-        primarySwatch: Colors.blue,
+        // primarySwatch: Colors.green,
       ),
       debugShowCheckedModeBanner: false,
-      home: MainPage(),
+      home: RegistrationPage(),
     );
   }
 }
