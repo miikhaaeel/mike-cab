@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mike_cab/brand_colors.dart';
+import 'package:mike_cab/screens/loginpage.dart';
+import 'package:mike_cab/widgets/taxi_button.dart';
 
 class RegistrationPage extends StatelessWidget {
   const RegistrationPage({super.key});
+  static const String id = 'register';
 
   @override
   Widget build(BuildContext context) {
@@ -123,32 +126,19 @@ class RegistrationPage extends StatelessWidget {
                     const SizedBox(
                       height: 40,
                     ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: BrandColors.colorGreen,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                      ),
+                    TaxiButton(
+                      title: 'REGISTER',
                       onPressed: () {},
-                      child: const SizedBox(
-                        height: 50,
-                        child: Center(
-                          child: Text(
-                            'REGISTER',
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontFamily: 'Brand-Bold',
-                                color: Colors.white),
-                          ),
-                        ),
-                      ),
+                      color: BrandColors.colorGreen,
                     ),
                     const SizedBox(
                       height: 20,
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, LoginPage.id, (route) => false);
+                      },
                       child: const Text(
                         "Already have an account? Sign in",
                         style: TextStyle(

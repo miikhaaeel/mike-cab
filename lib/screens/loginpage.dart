@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mike_cab/brand_colors.dart';
+import 'package:mike_cab/screens/registration_page.dart';
+import 'package:mike_cab/widgets/taxi_button.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
+  static const String id = 'login';
 
   @override
   Widget build(BuildContext context) {
@@ -81,32 +84,19 @@ class LoginPage extends StatelessWidget {
                     const SizedBox(
                       height: 40,
                     ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: BrandColors.colorGreen,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                      ),
+                    TaxiButton(
+                      title: 'LOGIN',
                       onPressed: () {},
-                      child: const SizedBox(
-                        height: 50,
-                        child: Center(
-                          child: Text(
-                            'Login',
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontFamily: 'Brand-Bold',
-                                color: Colors.white),
-                          ),
-                        ),
-                      ),
+                      color: BrandColors.colorGreen,
                     ),
                     const SizedBox(
                       height: 30,
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, RegistrationPage.id, (route) => false);
+                      },
                       child: const Text(
                         "Don't have an account? Sign up",
                         style: TextStyle(
