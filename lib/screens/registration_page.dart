@@ -1,11 +1,21 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mike_cab/brand_colors.dart';
 import 'package:mike_cab/screens/loginpage.dart';
 import 'package:mike_cab/widgets/taxi_button.dart';
 
 class RegistrationPage extends StatelessWidget {
-  const RegistrationPage({super.key});
+  RegistrationPage({super.key});
+
   static const String id = 'register';
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final phoneController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  void registerUser() {}
 
   @override
   Widget build(BuildContext context) {
