@@ -21,9 +21,7 @@ class _MainPageState extends State<MainPage> {
       body: Center(
         child: MaterialButton(
           onPressed: () {
-            DatabaseReference dbref =
-                FirebaseDatabase.instance.ref().child('animal');
-            dbref.set('goat');
+          
           },
           height: 50,
           color: Colors.green,
