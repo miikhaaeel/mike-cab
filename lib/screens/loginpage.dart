@@ -1,11 +1,75 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:mike_cab/brand_colors.dart';
+import 'package:mike_cab/screens/main_page.dart';
 import 'package:mike_cab/screens/registration_page.dart';
 import 'package:mike_cab/widgets/taxi_button.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class LoginPage extends StatefulWidget {
+  LoginPage({super.key});
   static const String id = 'login';
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final emailController = TextEditingController();
+
+  final passwordController = TextEditingController();
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  void showSnackBar(String title, BuildContext context) {
+    final snackBar = SnackBar(
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.red.withOpacity(0.8),
+      margin: EdgeInsets.all(3),
+      content: Text(
+        title,
+        textAlign: TextAlign.center,
+        style: const TextStyle(
+          fontSize: 15,
+          color: Colors.white,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void login() async {
+    try {
+      final user = (await _auth.signInWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      ))
+          .user;
+
+      if (user != null) {
+        print(user); //save uset details to db
+        DatabaseReference userRef =
+            FirebaseDatabase.instance.ref().child('users/${user.uid}');
+        userRef.once().then((DatabaseEvent event) => {
+              if (event.snapshot.value != null)
+                {
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, MainPage.id, (route) => false)
+                }
+            });
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+        showSnackBar(e.code, context);
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+        showSnackBar(e.code, context);
+      }
+    } catch (e) {}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +77,7 @@ class LoginPage extends StatelessWidget {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -41,9 +105,10 @@ class LoginPage extends StatelessWidget {
                 padding: const EdgeInsets.all(20),
                 child: Column(
                   children: [
-                    const TextField(
+                    TextField(
+                      controller: emailController,
                       keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Email Address',
                         labelStyle: TextStyle(
                           fontSize: 14,
@@ -55,17 +120,17 @@ class LoginPage extends StatelessWidget {
                           fontFamily: 'Brand-Bold',
                         ),
                       ),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14,
                       ),
                     ),
                     const SizedBox(
                       height: 10,
                     ),
-                    const TextField(
-                      obscureText: true,
+                    TextField(
+                      controller: passwordController,
                       keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Password',
                         labelStyle: TextStyle(
                           fontSize: 14,
@@ -77,7 +142,7 @@ class LoginPage extends StatelessWidget {
                           fontFamily: 'Brand-Bold',
                         ),
                       ),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14,
                       ),
                     ),
@@ -86,7 +151,25 @@ class LoginPage extends StatelessWidget {
                     ),
                     TaxiButton(
                       title: 'LOGIN',
-                      onPressed: () {},
+                      onPressed: () async {
+                        var connectivityResult =
+                            await Connectivity().checkConnectivity();
+                        if (!emailController.text.contains('@')) {
+                          showSnackBar('Enter a valid password', context);
+                          return;
+                        }
+
+                        if (passwordController.text.length < 8) {
+                          showSnackBar('Password musr be at least 8 characters',
+                              context);
+                          return;
+                        }
+                        if (connectivityResult != ConnectivityResult.mobile &&
+                            connectivityResult != ConnectivityResult.wifi) {
+                          showSnackBar('No internet', context);
+                          return;
+                        }
+                      },
                       color: BrandColors.colorGreen,
                     ),
                     const SizedBox(
