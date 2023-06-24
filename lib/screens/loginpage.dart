@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -5,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:mike_cab/brand_colors.dart';
 import 'package:mike_cab/screens/main_page.dart';
 import 'package:mike_cab/screens/registration_page.dart';
+import 'package:mike_cab/widgets/progress_dialogue.dart';
 import 'package:mike_cab/widgets/taxi_button.dart';
 
 class LoginPage extends StatefulWidget {
@@ -41,6 +44,15 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void login() async {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return const ProgressDialog(
+            status: 'Logging in',
+          );
+        });
+
     try {
       final user = (await _auth.signInWithEmailAndPassword(
         email: emailController.text,
@@ -59,8 +71,10 @@ class _LoginPageState extends State<LoginPage> {
                       context, MainPage.id, (route) => false)
                 }
             });
+        showSnackBar('Login successful', context);
       }
     } on FirebaseAuthException catch (e) {
+      Navigator.pop(context);
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
         showSnackBar(e.code, context);
@@ -68,7 +82,9 @@ class _LoginPageState extends State<LoginPage> {
         print('The account already exists for that email.');
         showSnackBar(e.code, context);
       }
-    } catch (e) {}
+    } catch (e) {
+      Navigator.pop(context);
+    }
   }
 
   @override
@@ -169,6 +185,7 @@ class _LoginPageState extends State<LoginPage> {
                           showSnackBar('No internet', context);
                           return;
                         }
+                        login();
                       },
                       color: BrandColors.colorGreen,
                     ),

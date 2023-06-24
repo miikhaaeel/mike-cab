@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:mike_cab/brand_colors.dart';
 import 'package:mike_cab/screens/loginpage.dart';
 import 'package:mike_cab/screens/main_page.dart';
+import 'package:mike_cab/widgets/progress_dialogue.dart';
 import 'package:mike_cab/widgets/taxi_button.dart';
 
 class RegistrationPage extends StatelessWidget {
@@ -40,12 +41,22 @@ class RegistrationPage extends StatelessWidget {
   }
 
   void registerUser(BuildContext context) async {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return const ProgressDialog(
+            status: 'Logging in',
+          );
+        });
     try {
       final user = (await _auth.createUserWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,
       ))
           .user;
+      Navigator.pop(context);
+
       if (user != null) {
         print(user); //save uset details to db
         DatabaseReference newUserRef =
@@ -63,8 +74,11 @@ class RegistrationPage extends StatelessWidget {
         // ignore: use_build_context_synchronously
         Navigator.pushNamedAndRemoveUntil(
             context, MainPage.id, (route) => false);
+        showSnackBar('Registration successful', context);
       }
     } on FirebaseAuthException catch (e) {
+      Navigator.pop(context);
+
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
         showSnackBar(e.code, context);
@@ -73,6 +87,8 @@ class RegistrationPage extends StatelessWidget {
         showSnackBar(e.code, context);
       }
     } catch (e) {
+      Navigator.pop(context);
+
       print(e);
 
       showSnackBar(e.toString(), context);
